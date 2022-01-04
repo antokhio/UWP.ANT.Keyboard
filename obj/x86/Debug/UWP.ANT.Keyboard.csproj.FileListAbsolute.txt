@@ -1,0 +1,7 @@
+C:\Users\Smart\source\repos\GONO\UWP.ANT.Keyboard\obj\x86\Debug\UWP.ANT.Keyboard.csproj.AssemblyReference.cache
+C:\Users\Smart\source\repos\GONO\UWP.ANT.Keyboard\obj\x86\Debug\KeyboardControl.g.i.cs
+C:\Users\Smart\source\repos\GONO\UWP.ANT.Keyboard\obj\x86\Debug\KeyboardControl.g.cs
+C:\Users\Smart\source\repos\GONO\UWP.ANT.Keyboard\obj\x86\Debug\XamlTypeInfo.g.cs
+C:\Users\Smart\source\repos\GONO\UWP.ANT.Keyboard\obj\x86\Debug\KeyboardControl.xaml
+C:\Users\Smart\source\repos\GONO\UWP.ANT.Keyboard\obj\x86\Debug\KeyboardControl.xbf
+C:\Users\Smart\source\repos\GONO\UWP.ANT.Keyboard\obj\x86\Debug\XamlSaveStateFile.xml
