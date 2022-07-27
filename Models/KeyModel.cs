@@ -11,5 +11,5 @@ namespace UWP.ANT.Keyboard.Models
         public string Key { get; set; }
         public string KeyUpper { get; set; }
         public int Width { get; set; }
-    };
+    }
 }

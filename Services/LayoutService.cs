@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UWP.ANT.Keyboard.Models;
-using Windows.UI.Input.Preview.Injection;
 
 namespace UWP.ANT.Keyboard.Services
 {

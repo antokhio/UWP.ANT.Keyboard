@@ -473,4 +473,3 @@ namespace UWP.ANT.Keyboard.Data
 
     }
 }
-

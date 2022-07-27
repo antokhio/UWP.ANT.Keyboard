@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using Windows.UI.Xaml;
 
 namespace UWP.ANT.Keyboard.Services
 {
@@ -49,4 +49,3 @@ namespace UWP.ANT.Keyboard.Services
         }
     }
 }
-
