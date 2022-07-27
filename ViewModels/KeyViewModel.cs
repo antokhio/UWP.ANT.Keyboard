@@ -17,7 +17,7 @@ namespace UWP.ANT.Keyboard.ViewModels
         public string Key
         {
             get { return key; }
-            set { SetProperty(ref key,value); }
+            set { SetProperty(ref key, value); }
         }
 
         public int Width { get; set; }

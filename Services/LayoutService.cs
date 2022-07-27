@@ -10,7 +10,7 @@ namespace UWP.ANT.Keyboard.Services
 {
     public static class LayoutService
     {
-        public static List<List<KeyModel>> GetLayout(string[] layoutLower, string[] layoutUpper)
+        public static LayoutModel GetLayout(string name, string[] layoutLower, string[] layoutUpper, Dictionary<string, string[]> candidates = null)
         {
             var layout = new List<List<KeyModel>>();
 
@@ -42,17 +42,18 @@ namespace UWP.ANT.Keyboard.Services
                             width = 1;
                             break;
                     }
-                        
-                    row.Add(new KeyModel {
+
+                    row.Add(new KeyModel
+                    {
                         Key = keysLower[j],
                         KeyUpper = keysUpper[j],
                         Width = width
-                    }); 
+                    });
                 }
                 layout.Add(row);
             };
 
-            return layout;
+            return new LayoutModel { Name = name, Layout = layout, Candidtaes = candidates };
         }
     }
 }

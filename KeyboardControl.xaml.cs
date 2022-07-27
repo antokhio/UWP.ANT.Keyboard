@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
+using Windows.Globalization;
 
 // The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
 
@@ -25,7 +26,7 @@ namespace UWP.ANT.Keyboard
 {
     public sealed partial class KeyboardControl : UserControl
     {
-        KeyboardViewModel ViewModel { get; set; }
+        public KeyboardViewModel ViewModel { get; set; }
         InputInjectorService InjectorService { get; set; }
         FocusService FocusService { get; set; }
         //List<List<KeyModel>> Layout { get; set;  }
@@ -59,19 +60,42 @@ namespace UWP.ANT.Keyboard
 
         private bool KeyLng;
 
+
         public KeyboardControl()
         {
             this.InitializeComponent();
             this.InjectorService = new InputInjectorService();
             this.FocusService = new FocusService();
-            this.ViewModel = new KeyboardViewModel(this.InjectorService, this.FocusService, LayoutService.GetLayout(KeyboardLayouts.LowerRussian, KeyboardLayouts.UpperRussian), LayoutService.GetLayout(KeyboardLayouts.LowerEnglish, KeyboardLayouts.UpperEnglish));
-            this.Loaded += KeyboardControl_Loaded;        
+
+
+            var lng = ApplicationLanguages.PrimaryLanguageOverride;
+            switch (lng)
+            {
+                default:
+                case "ru-RU":
+                    this.ViewModel = new KeyboardViewModel(this.InjectorService, this.FocusService, LayoutService.GetLayout("RU", KeyboardLayouts.LowerRussian, KeyboardLayouts.UpperRussian), LayoutService.GetLayout("EN", KeyboardLayouts.LowerEnglish, KeyboardLayouts.UpperEnglish));
+                    break;
+                case "en-US":
+                    this.ViewModel = new KeyboardViewModel(this.InjectorService, this.FocusService, LayoutService.GetLayout("EN", KeyboardLayouts.LowerEnglish, KeyboardLayouts.UpperEnglish), LayoutService.GetLayout("RU", KeyboardLayouts.LowerRussian, KeyboardLayouts.UpperRussian));
+                    break;
+                case "zh-Hans-CN":
+                    this.ViewModel = new KeyboardViewModel(this.InjectorService, this.FocusService, LayoutService.GetLayout("ZH-CN", KeyboardLayouts.LowerChinese, KeyboardLayouts.UpperChinese, KeyboardLayouts.ChiniseCandidates), LayoutService.GetLayout("EN", KeyboardLayouts.LowerEnglish, KeyboardLayouts.UpperEnglish));
+                    break;
+            }
+            this.keyboardControl.Loaded += KeyboardControl_Loaded;
+            this.candidateList.Loaded += CandidateList_Loaded;
+        }
+
+        private void CandidateList_Loaded(object sender, RoutedEventArgs e)
+        {
+            //BindingOperations.SetBinding(candidateList, ListView.ItemsSourceProperty, new Binding { Source = ViewModel.Candidates, Mode = BindingMode.OneWay });
+            candidateList.ItemClick += (s, a) => ViewModel.CandidateCommand.Execute(a.ClickedItem);
         }
 
         private void KeyboardControl_Loaded(object sender, RoutedEventArgs e)
         {
-            MainKeyboard = Keyboard(ViewModel.Keys);
-            AltKeyboard = Keyboard(ViewModel.AltKeys);
+            MainKeyboard = Keyboard(ViewModel.Keys, ViewModel.KeysName);
+            AltKeyboard = Keyboard(ViewModel.AltKeys, ViewModel.AltKeysName);
 
             (sender as UserControl).Content = MainKeyboard;
         }
@@ -81,13 +105,13 @@ namespace UWP.ANT.Keyboard
             KeyLng = !KeyLng;
 
             if (!KeyLng)
-                this.Content = MainKeyboard; 
+                this.keyboardControl.Content = MainKeyboard;
             else
-                this.Content = AltKeyboard ;
+                this.keyboardControl.Content = AltKeyboard;
 
         }
 
-        private Grid Keyboard(List<List<KeyViewModel>> keys)
+        private Grid Keyboard(List<List<KeyViewModel>> keys, string name)
         {
             var grid = new Grid();
             var layout = keys;
@@ -133,7 +157,8 @@ namespace UWP.ANT.Keyboard
                         switch (item.Key)
                         {
                             case "lng":
-                                btn.Content = new FontIcon { FontFamily = GlyphFont, Glyph = "\uE774" };
+                                //btn.Content = new FontIcon { FontFamily = GlyphFont, Glyph = "\uE774" };
+                                btn.Content = name;
                                 BindingOperations.SetBinding(btn, Button.CommandProperty, new Binding { Source = ViewModel.LngCommand });
                                 btn.Click += Btn_Click;
                                 break;

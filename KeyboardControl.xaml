@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:c="using:UWP.ANT.Keyboard.Converters"
+    xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400"
@@ -13,4 +14,34 @@
     <UserControl.Resources>
         <c:BooleanToStyleConverter x:Key="BooleanToStyle"/>
     </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListView Padding="0,0,0,10" x:Name="candidateList" IsItemClickEnabled="True" SelectionMode="None" AllowFocusOnInteraction="False"
+                          ItemsSource="{x:Bind ViewModel.Candidates, Mode=OneWay}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <controls:WrapPanel VerticalSpacing="2" HorizontalSpacing="2"  />
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="Margin" Value="0"/>
+                    <Setter Property="MaxWidth" Value="32"/>
+                    <Setter Property="MinWidth" Value="32"/>
+                    <Setter Property="Width" Value="32"/>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <TextBlock Text="{x:Bind}" HorizontalAlignment="Center"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <UserControl Grid.Row="1" x:Name="keyboardControl"/>
+    </Grid>
 </UserControl>
